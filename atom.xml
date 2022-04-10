@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><title type="text">Hugo 主题 MemE</title><subtitle type="html">MemE 是一个强大且可高度定制的 GoHugo 博客主题，专为个人博客设计。</subtitle><updated>2022-04-10T22:13:38+00:00</updated><id>https://example.com/</id><link rel="alternate" type="text/html" href="https://example.com/"/><link rel="self" type="application/atom+xml" href="https://example.com/atom.xml"/><author><name>reuixiy</name><uri>https://example.com/</uri><email>reuixiy@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><generator uri="https://gohugo.io/" version="0.96.0">Hugo</generator><entry><title type="text">笔记： 如何维护 NVDA 社区本地化翻译-感谢雪岭冰龙修正</title><link rel="alternate" type="text/html" href="https://example.com/post/nvda-localization/"/><id>https://example.com/post/nvda-localization/</id><updated>2020-04-02T09:45:22+08:00</updated><published>2020-04-02T09:45:22+08:00</published><author><name>reuixiy</name><uri>https://io-oi.me/</uri><email>reuixiy@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">记录开源屏幕阅读器 NVDA 是如何维护翻译的。</summary><content type="html">&lt;h2 id="如何维护nvda社区本地化翻译">如何维护NVDA社区本地化翻译&lt;/h2>
+&lt;ul>
+&lt;li>NVDA是一套开放源代码的屏幕阅读器,他可以被翻译成多种国家的语言,下面就已问答的形式来讲讲刚进入NVDA SVN翻译团队的新成员,怎么进入NVDA翻译维护的世界:
+问:&lt;/li>
+&lt;li>我已经加入了官方svn翻译团队,有了上传权限,接下来我应该准备一些什么工具?
+答:&lt;/li>
+&lt;li>工欲善其事,必先利其器.下面就讲一讲在NVDA的翻译过程中,所需要的一些常用工具:
+TortoiseSVN:&lt;/li>
+&lt;li>TortoiseSVN 是 Apache Subversion（SVN）的客户端工具之一,TortoiseSVN 在NVDA的翻译过程中,主要是启着获取官方最新的翻译文件,和同步翻译条目到官方svn存储库的绝色。
+&lt;a href="https://tortoisesvn.net/downloads.zh.html">TortoiseSVN 安装包 语言包下载&lt;/a>
+poedit:&lt;/li>
+&lt;li>Poedit 是 Gettext Translations Editor 的本地化编辑器,主要是编辑.po的翻译格式文件,poedit在NVDA的翻译过程中,主要是起着翻译NVDA主界面(nvda.po),和NVDA插件的绝色。
+&lt;a href="https://poedit.net/download">poedit下载&lt;/a>
+文本编辑器:
+&lt;a href="https://notepad-plus-plus.org/downloads/">notepad++&lt;/a>
+&lt;a href="https://akelpad.sourceforge.net/en/download.php">AkelPad&lt;/a>&lt;/li>
+&lt;li>任选一款安装使用
+问:&lt;/li>
+&lt;li>为什么要另外安装编辑器呢?使用windows 系统默认编辑器不行吗?
+答:&lt;/li>
+&lt;li>在NVDA的翻译过程中,编辑器也是不可缺少的一部分,编辑器主要是编辑NVDA的日志文件(changes.t2t),和NVDA的日志文件(userGuide.t2t),以即符号文件(symbols.dic),另外还有控制选择插件翻译的文件(settings)。&lt;/li>
+&lt;li>至于为什么不能使用windows 的默认编辑器,是因为在使用windows 默认编辑器编辑上数文件的过程中,编辑玩,使用windows 默认编辑器保存文件以后,有可能会丢失一些字符,所以在翻译NVDA的过程中不推荐使用 windows 默认的编辑器.另，假如你是windows10-1903的系统的话，就可以直接编辑文件了，因为从windows1903以后的记事本已经解决了字符集的问题。
+问:&lt;/li>
+&lt;li>工具都安装完了,下面应该做什么呢?
+答:&lt;/li>
+&lt;li>工具都准备玩以后,接下来就是 checkout NVDA翻译目录了。&lt;/li>
+&lt;li>首先打开桌面的此电脑,这是windows10的资源管理器的名称假如是windows7那么就是打开计算机,随便找一个磁盘进去,然后打开context menu菜单,找到(SVN Checkout...),打开这时候会出现输入 checkout URL地址的文本框,这时候输入&lt;a href="https://subversion.assembla.com/svn/screenReaderTranslations">地址&lt;/a>,然后ok 开始 checkout NVDA的翻译工作目录.&lt;/li>
+&lt;li>一段时间过后,NVDA的翻译目录就 checkout 到电脑上了.
+问:&lt;/li>
+&lt;li>哇,这么多目录,这些目录都有什么作用呢?里面的文件又是做什么的呢?
+答:&lt;/li>
+&lt;li>checkout玩NVDA翻译工作目录以后,这时候会在你选择的checkout位置出现一个名维(screenReaderTranslations)的目录,大小差不多在321MB左右.&lt;/li>
+&lt;li>我们打开,这时候可以看到如下目录:
+am
+an
+ar
+bg
+ca
+ckb
+cs
+da
+de……&lt;/li>
+&lt;li>这么多目录,是各个国家的I18N代码,也就是存放各个国家NVDA翻译的地方.&lt;/li>
+&lt;li>其中(scripts)目录是存放NVDA同步翻译脚本,和NVDA翻译者邮件地址文件的地方,不推荐翻译维护者去随便修改.&lt;/li>
+&lt;li>外部目录就是这样,下面进入内部目录结构的介绍:&lt;/li>
+&lt;li>我们已(zh_CN)目录维例,首先找到并打开zh_CN目录,这时候我们可以看到如下目录和文件:&lt;/li>
+&lt;li>add-ons,此目录主要存放的是NVDA附加插件的翻译文件,当然是.po的.&lt;/li>
+&lt;li>changes-newRevisions,此目录主要是存放需要翻译的NVDA日志版本,其中翻译条目存放于wordDifferences.txt文本中,带家号的是需要翻译的条目.&lt;/li>
+&lt;li>symbols-newRevisions,此目录主要是存放需要翻译的NVDA符号版本,其中翻译条目存放于wordDifferences.txt文本中,带家号的是需要翻译的条目.&lt;/li>
+&lt;li>userGuide-newRevisions,此目录主要是存放需要翻译的NVDA用户指南版本,其中翻译条目存放于wordDifferences.txt文本中,带家号的是需要翻译的条目.&lt;/li>
+&lt;li>changes.html,此文件是翻译后的网页格式的日志文件.&lt;/li>
+&lt;li>changes.t2t,此文件是存储翻译的日志文件&lt;/li>
+&lt;li>characterDescriptions.dic,此文件是存储翻译的字典文件.&lt;/li>
+&lt;li>keyCommands.html,此文件是NVDA快捷键指南的网页&lt;/li>
+&lt;li>nvda.po,此文件是NVDA主界面的翻译文件.&lt;/li>
+&lt;li>settings,此文件是控制是否想接收附加插件翻译的文本文件.1是想翻译此插件,0是不想翻译此插件,插件名对应数字1或数字0.&lt;/li>
+&lt;li>symbols.dic,此文件是储存翻译的符号文件.&lt;/li>
+&lt;li>userGuide.html,此文件是翻译后的用户指南的网页格式的文件.&lt;/li>
+&lt;li>userGuide.t2t,此文件是存储翻译的用户指南文件.&lt;/li>
+&lt;li>userGuide-structureDifferences.txt,此文件主要记录了用户指南的修改行和列.&lt;/li>
+&lt;li>这就是目录结构.&lt;/li>
+&lt;li>哇,原来是这样,基本的我都明白了,那么有需要注意的一些问题吗?
+答:&lt;/li>
+&lt;li>为了可以更好的维护好NVDA的翻译,下面就讲一讲一些需要注意的问题.
+问题1:&lt;/li>
+&lt;li>在编辑翻译,和提交翻译之前切记要更新翻译目录,假如不更新,直接把修改好的翻译直接提交到官方,这时候会出现冲突,不仅你辛辛苦苦翻译的条目会功亏一篑,其他翻译者的也会被付之一炬,所以需要谨慎,一定要更新翻译目录.
+问题2:&lt;/li>
+&lt;li>在提交翻译的时候,尽量言简意赅的贴出你所修改的条目内容,或日志.&lt;/li>
+&lt;li>基本的注意事项就这些,以后文章会不定期的增删改内容,和不断完善的.
+问：
+中文本地化和其他语言有什么不同？
+答：
+1、不同语言的文字用空格拆分，比如中文中间包含不需要翻译的英文单词，单词两边需要空格；
+2、如果翻译原文中包含特殊字符，请保留，特殊字符如反斜杠，竖杠等等；
+3、要注意翻译中的变量，请不要翻译，通常变量会有特殊前缀或者是特殊括号括住；
+4、尽量保持原文园艺的前提下，进行方便中文用户的演绎；
+5、注意使用的标点，翻译成中文时，有可用的中文标点不可使用英文标点；
+6、快捷键需要用英文小括号括起来；
+7、请尽量保留原文格式；
+8、当遇到不知为何物的单词或者词组，应该想办法查资料，比如翻找各类百科，用搜索引擎，或者是其他有相关讨论的主题等等，直到确定翻译的意思唯一；
+9、查资料之后仍然不知道怎么办，请询问其他有经验的朋友寻求帮助；
+附录:&lt;/li>
+&lt;li>下面附上TortoiseSVN,NVDA等官方的翻译指南的网页地址:
+&lt;a href="https://tortoisesvn.net/docs/release/TortoiseSVN_zh_CN/index.html">TortoiseSVN简体中文文档&lt;/a>
+&lt;a href="https://github.com/nvaccess/nvda/wiki/Translating">NVDA官方翻译文档&lt;/a>
+&lt;a href="https://poedit.net/trac/wiki/Doc?fromVersion=2.0.7">poedit翻译工具帮助文档&lt;/a>
+ps：&lt;/li>
+&lt;li>这篇文章写于去年，用途主要是给新的 NVDA 翻译志愿者已入门。&lt;/li>
+&lt;li>告诉他们如何维护 NVDA 的中文翻译。&lt;/li>
+&lt;li>其中的不足之处可能就是符号了，还有就是有的一些地方没有说清楚。&lt;/li>
+&lt;/ul></content><category scheme="https://example.com/categories/%E7%AC%94%E8%AE%B0/" term="笔记" label="笔记"/><category scheme="https://example.com/tags/nvda/" term="NVDA" label="NVDA"/><category scheme="https://example.com/tags/localization/" term="Localization" label="Localization"/></entry><entry><title type="text">部署博客</title><link rel="alternate" type="text/html" href="https://example.com/post/deploy-blog/"/><id>https://example.com/post/deploy-blog/</id><updated>2020-04-01T07:56:10+08:00</updated><published>2020-04-01T07:56:10+08:00</published><author><name>reuixiy</name><uri>https://io-oi.me/</uri><email>reuixiy@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">记录博客搭建的全过程</summary><content type="html">&lt;p>上篇博文最后提到了部署博客，这篇文章就记录一下博客部署过程。&lt;/p>
+&lt;h2 id="11事先准备">1.1：事先准备&lt;/h2>
+&lt;ul>
+&lt;li>首先从&lt;a href="https://github.com/gohugoio/hugo/releases">hugo-github-release页面&lt;/a>下载hugo_extended_0.68.3_Windows-64bit.zip。&lt;/li>
+&lt;li>下载好hugo_extended_0.68.3_Windows-64bit.zip后，使用7zip解压到您想存的地方。&lt;/li>
+&lt;li>然后去控制面板\系统和安全\系统/高级系统设置/环境变量添加hugo的环境变量，安装即可完成。&lt;/li>
+&lt;li>最后打开cmd使用以下命令测试您的hugo是否安装成功？
+&lt;code>hugo version&lt;/code>
+运行以上命令， cmd 打印出以下信息， hugo 安装即可完成。
+&lt;code>Hugo Static Site Generator v0.68.3/extended windows/amd64 BuildDate: unknown&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="12博客创建和配置">1.2：博客创建和配置&lt;/h2>
+&lt;p>完成上一步接下来激动人心的创建和配置就开始了，真的有一点而激动呢！&lt;/p>
+&lt;ul>
+&lt;li>首先打开Git Bash确认博客保存的位置，我这里已磁盘c维例。&lt;/li>
+&lt;li>输入以下命令创建博客目录，并初始化博客目录结构。
+&lt;code>cd c:/&lt;/code>
+&lt;code>hugo new site blog&lt;/code>
+&lt;code>cd c:/blog&lt;/code>
+&lt;code>git init&lt;/code>&lt;/li>
+&lt;li>输入命令的一瞬间，说真的很快，hugo博客的基本框架就创建好了。&lt;/li>
+&lt;li>创建完的博客并不是马上就可以用的。&lt;/li>
+&lt;li>需要去下载一个博客主题才可以跑起来。&lt;/li>
+&lt;li>&lt;a href="https://themes.gohugo.io">Complete List | Hugo Themes&lt;/a>，这是hugo官方提供的主题集合网站，有很多的主题可以选择使用。&lt;/li>
+&lt;li>这是我用的hugo 主题 &lt;a href="https://github.com/xianmin/hugo-theme-jane">Jane&lt;/a>
+打开主题项目页后，首先Fork一份主题到您的Github账号下。&lt;/li>
+&lt;li>然后回到您的Github找到您刚刚Fork的主题，找到Clone or download 按钮展开复制其中的地址。&lt;/li>
+&lt;li>不管是https，还是ssh都可以。&lt;/li>
+&lt;li>使用以下命令添加主题：
+&lt;code>git submodule add https://github.com/xianmin/hugo-theme-jane themes/jane&lt;/code>&lt;/li>
+&lt;li>一段时间后，blog/themes目录中就有了刚刚添加的主题了。&lt;/li>
+&lt;li>注意： 添加的 Git 子模块是独立于 blog的版本管理的，总的来说就是博客目录现在有两个 Git 项目。&lt;/li>
+&lt;li>然后从/themes/jane目录的exampleSite中复制full-config.toml配置文件到博客根目录，替换原来的config.toml。&lt;/li>
+&lt;li>注意别忘了重命名维config.toml哦。&lt;/li>
+&lt;li>以下是我个人的&lt;a href="https://github.com/dingpengyu/blog/blob/master/config.toml">博客配置&lt;/a>，仅供读者参考。&lt;/li>
+&lt;li>经过以上的配置，一个本地的静态博客就创建和配置完成了。&lt;/li>
+&lt;li>使用命令 hugo server -D&lt;/li>
+&lt;li>打开浏览器，输入 localhost:1313 即可预览。&lt;/li>
+&lt;/ul>
+&lt;h2 id="13部署博客到github-pages">1.3：部署博客到github pages&lt;/h2>
+&lt;ul>
+&lt;li>这是博客部署意文的最后一部，将创建的静态博客部署到 github pages。&lt;/li>
+&lt;li>首先创建 github_pages_TOKEN 后面要用&lt;/li>
+&lt;li>打开 Git Bash 将位置定位到磁盘C。&lt;/li>
+&lt;li>输入以下命令生成 ssh key：
+&lt;code>ssh-keygen -f github-deploy-key&lt;/code>&lt;/li>
+&lt;li>一路回车即可，注意在生成的过程中别输入密码。&lt;/li>
+&lt;li>这时候磁盘c会出现两个文件，分别是： github_pages_TOKEN和github_pages_TOKEN.pub。&lt;/li>
+&lt;li>github_pages_TOKEN是私钥，github_pages_TOKEN.pub是公钥。&lt;/li>
+&lt;li>接着打开&lt;a href="https://github.com">Github&lt;/a>，创建example存储库。&lt;/li>
+&lt;li>打开 &lt;a href="https://github.com/example/example/settings">settings&lt;/a>找到&lt;a href="https://github.com/example/example/settings/secrets">Secrets&lt;/a>和&lt;a href="https://github.com/example/example/settings/keys">Deploy&lt;/a>。&lt;/li>
+&lt;li>将 github_pages_TOKEN私密钥添加到Secrets，将github_pages_TOKEN.pub公钥添加到Deploy keys。&lt;/li>
+&lt;li>在博客根目录创建.github目录和workflows目录。&lt;/li>
+&lt;li>注意workflows目录在.github里面。&lt;/li>
+&lt;li>创建 github pages.yml文件。&lt;/li>
+&lt;li>粘贴以下配置并提交到创建的 example 存储库。
+`name: github pages&lt;/li>
+&lt;/ul>
+&lt;p>on:
+push:
+branches:
+- master&lt;/p>
+&lt;p>jobs:
+deploy:
+runs-on: ubuntu-latest
+steps:
+- uses: actions/checkout@v2
+with:
+submodules: true&lt;/p>
+&lt;pre>&lt;code> - name: Setup Hugo
+uses: peaceiris/actions-hugo@v2
+with:
+hugo-version: 'latest'
+extended: true
+- name: Build
+run: hugo --minify
+- name: Deploy
+uses: peaceiris/actions-gh-pages@v3
+with:
+deploy_key: ${{ secrets.github_pages_TOKEN }}
+publish_dir: ./public
+UserName: example
+UserEmail: example@users.noreply.github.com
+CNAME: www.example.com`
+&lt;/code>&lt;/pre>
+&lt;h2 id="14最后想说的话">1.4：最后想说的话&lt;/h2>
+&lt;ul>
+&lt;li>文章就到这里结束了，写的磕磕绊绊的。&lt;/li>
+&lt;li>有可能还有引用的代码无法高量的问题。&lt;/li>
+&lt;li>这是第一篇正规的博文。&lt;/li>
+&lt;li>也许还有很多需要完善的地方。&lt;/li>
+&lt;/ul></content><category scheme="https://example.com/categories/%E7%AC%94%E8%AE%B0/" term="笔记" label="笔记"/><category scheme="https://example.com/tags/deploy/" term="deploy" label="deploy"/><category scheme="https://example.com/tags/hugo/" term="hugo" label="hugo"/><category scheme="https://example.com/tags/blog/" term="blog" label="blog"/></entry><entry><title type="text">博客的用途</title><link rel="alternate" type="text/html" href="https://example.com/post/hello/"/><id>https://example.com/post/hello/</id><updated>2020-03-28T11:18:11+08:00</updated><published>2020-03-28T11:18:11+08:00</published><author><name>reuixiy</name><uri>https://io-oi.me/</uri><email>reuixiy@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">……</summary><content type="html">&lt;ul>
+&lt;li>其实创建一个笔记形的静态站由来已久了：&lt;/li>
+&lt;li>去年的时候就觉得，学了忘，忘了学不是个办法。&lt;/li>
+&lt;li>于是就想到了创建个静态站记录一下学习过程，以防以后忘了好进行查找。&lt;/li>
+&lt;li>刚开始的时候安装了很多的静态网站程序，不知选哪个适合自己才好。&lt;/li>
+&lt;li>于是，我选了这几款静态网站程序做了体验： &lt;a href="https://hexo.io">hexo&lt;/a>、&lt;a href="https://jekyllrb.com">jekyll&lt;/a>、&lt;a href="https://gohugo.io">hugo&lt;/a>&lt;/li>
+&lt;li>谈谈我个人的体验吧！&lt;/li>
+&lt;li>首先谈谈jekyll：&lt;/li>
+&lt;li>jekyll在使用过程中是要安装ruby环境的，我在体验的过程中发现ruby环境安装体积很大，jekyll上手入门成本比较高。写文章时可能会用到html。
+另外不知道是我运气不好，还是不知道是什么原因，在使用jekyll的过程中，文章修改完经常报错。
+很快jekyll就从我电脑中消失了。&lt;/li>
+&lt;li>接着谈谈hexo：*&lt;/li>
+&lt;li>其实hexo是一款很不错的静态网站生成器，基于nodejs，灵活性高，社区完善度好，但是他唯一的不足之处可能是我个人的原因吧！hexo安装的nodejs模块实在是太多了。这款网站生成器又没有留在我的电脑上很久时间就从我电脑消失了。&lt;/li>
+&lt;li>最后谈谈重头戏hugo：&lt;/li>
+&lt;li>hugo在我的体验过程中让我很惊验，首先hugo的官方社区很繁荣，其次是hugo部署起来很方便，一个执行文件解决问题，当然可能麻烦的问题应该是配置windows变量比较复杂但是比jekyll和hexo要好得多了。&lt;/li>
+&lt;li>这就是我想要的，我当时心里很高兴，于是我就选了最后一个hugo。&lt;/li>
+&lt;li>接下来就是折腾了，经过了官方文档的学习，就有了这个简单的页面&lt;/li>
+&lt;li>这就是博客的由来，下面写写怎么部署。&lt;/li>
+&lt;/ul></content><category scheme="https://example.com/categories/%E7%AC%94%E8%AE%B0/" term="笔记" label="笔记"/><category scheme="https://example.com/tags/notebook/" term="Notebook" label="Notebook"/></entry></feed>
